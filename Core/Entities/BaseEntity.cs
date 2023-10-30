@@ -5,6 +5,6 @@ namespace Core.Entities
     public class BaseEntity
     {
         [Key]
-        public Guid Id { get; set; }
+        public int Id { get; set; }
     }
 }
