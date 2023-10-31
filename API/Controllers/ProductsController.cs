@@ -1,8 +1,8 @@
+using API.DTO;
+using AutoMapper;
 using Core.Entities;
 using Core.Interfaces;
-using Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
@@ -11,24 +11,27 @@ namespace API.Controllers
     public class ProductsController : ControllerBase
     {
         private readonly IProductRepository _productRepository;
+        private readonly AutoMapper.IMapper _mapper;
 
-        public ProductsController(IProductRepository repo)
+        public ProductsController ( IProductRepository repo, AutoMapper.IMapper mapper)
         {
             _productRepository = repo;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Product>>> GetProducts()
+        public async Task<ActionResult<List<ProductDto>>> GetProducts()
         {
             var products = await _productRepository.GetProductsAsync();
 
-            return Ok(products);
+            return Ok(_mapper.Map<IReadOnlyList<ProductDto>>(products));
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Product>> GetProduct(int id)
+        public async Task<ActionResult<ProductDto>> GetProduct(int id)
         {
-            return await _productRepository.GetProductByIdAsync(id);
+            var product = await _productRepository.GetProductByIdAsync(id);
+            return Ok(_mapper.Map<Product, ProductDto>(product));
         }
 
         [HttpGet("brands")]
@@ -43,5 +46,9 @@ namespace API.Controllers
             return Ok(await _productRepository.GetProductTypesAsync());
         }
         
+    }
+
+    internal interface IMapper
+    {
     }
 }

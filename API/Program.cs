@@ -1,3 +1,5 @@
+using System.Reflection;
+using API.Mappers;
 using Core.Interfaces;
 using Infrastructure.Data;
 using Infrastructure.Data.Seed;
@@ -14,6 +16,7 @@ builder.Services.AddDbContext<StoreContext>(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddAutoMapper(Assembly.GetAssembly(typeof(AutoMapperProfile)));
 
 var app = builder.Build();
 
