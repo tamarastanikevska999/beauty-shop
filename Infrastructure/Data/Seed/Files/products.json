@@ -1,0 +1,42 @@
+[
+  {
+    "Name": "Moisturizing Cream",
+    "Description": "Barrier-restoring moisturizing cream for face and body.",
+    "Price": 200,
+    "PictureUrl": "images/products/1.png",
+    "ProductTypeId": 1,
+    "ProductBrandId": 1
+  },
+  {
+    "Name": "Toleriane Hydrating Gentle Facial Cleanser",
+    "Description": "Toleriane Hydrating Gentle Cleanser is a daily face wash for normal to dry, sensitive skin.",
+    "Price": 100,
+    "PictureUrl": "images/products/2.png",
+    "ProductTypeId": 2,
+    "ProductBrandId": 2
+  },
+  {
+    "Name": "Healthy Radiance Brightness Refresh Toner",
+    "Description": "A refreshing toner for sensitive skin that helps brighten uneven skin tone, and visibly reduces pigmentation and dark spots while leaving your skin fresh.",
+    "Price": 150,
+    "PictureUrl": "images/products/3.png",
+    "ProductTypeId": 3,
+    "ProductBrandId": 3
+  },
+  {
+    "Name": "Hydro Boost Hydrating Face Serum",
+    "Description": "Hydro Boost Hydrating Face Serum with Hyaluronic Acid boosts hydration for smooth, supple skin all day.",
+    "Price": 300,
+    "PictureUrl": "images/products/4.png",
+    "ProductTypeId": 4,
+    "ProductBrandId": 4
+  },
+  {
+    "Name": "Centella Calming Daily Sunscreen",
+    "Description": " It helps calms skin suffering from UV exposure and external stimuli.",
+    "Price": 350,
+    "PictureUrl": "images/products/5.png",
+    "ProductTypeId": 5,
+    "ProductBrandId": 5
+  }
+ ]
