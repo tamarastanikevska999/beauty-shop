@@ -1,5 +1,6 @@
 using Core.Entities;
 using Core.Interfaces;
+using Core.Util;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data
@@ -12,11 +13,6 @@ namespace Infrastructure.Data
             _context = context;
         }
 
-        public async Task<IReadOnlyList<ProductBrand>> GetProductBrandsAsync()
-        {
-            return await _context.ProductBrands.ToListAsync();
-        }
-
         public async Task<Product> GetProductByIdAsync(int id)
         {
             return await _context.Products
@@ -25,17 +21,94 @@ namespace Infrastructure.Data
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task<IReadOnlyList<Product>> GetProductsAsync()
+        public async Task<PagedProductList> GetProductsAsync(int? id, int? fromAmount, int? toAmount, string name, string type, string brand, Paging paging, Sorting sorting)
         {
-            return await _context.Products
+            var products = _context.Products
                 .Include(p => p.ProductType)
                 .Include(p => p.ProductBrand)
-                .ToListAsync();
+                .AsQueryable();
+            if (id != null && id > 0)
+            {
+                products = products.Where(x => x.Id == id);
+            }
+            if(!String.IsNullOrEmpty(name)){
+                products = products.Where(x => !string.IsNullOrEmpty(x.Name) && x.Name.ToLower().StartsWith(name.ToLower()));
+            }
+            if(!String.IsNullOrEmpty(type)){
+                products = products.Where(x => !string.IsNullOrEmpty(x.ProductType.Name) && x.ProductType.Name.ToLower().StartsWith(type.ToLower()));
+            }
+            if(!String.IsNullOrEmpty(brand)){
+                products = products.Where(x => !string.IsNullOrEmpty(x.ProductBrand.Name) && x.ProductBrand.Name.ToLower().StartsWith(brand.ToLower()));
+            }
+            if (fromAmount != null && fromAmount > 0)
+            {
+                products = products.Where(x => x.Price >= fromAmount);
+            }
+            if (toAmount != null && toAmount > 0)
+            {
+                products = products.Where(x => x.Price <= toAmount);
+            }
+
+            string sortBy = !String.IsNullOrEmpty(sorting.SortType)? sorting.SortType : "id";
+            string sortOrder = sorting.SortOrder == "asc" ? "asc" : "desc";
+
+            if (sortOrder == "desc")
+            {
+                if (sortBy == "price")
+                    products = products.OrderByDescending(x => x.Price);
+                else if (sortBy == "type")
+                    products = products.OrderByDescending(x => x.ProductType);
+                else if (sortBy == "brand")
+                    products = products.OrderByDescending(x => x.ProductBrand);
+                else
+                    products = products.OrderByDescending(x => x.Id);
+            }
+            else
+            {
+                if (sortBy == "price")
+                    products = products.OrderBy(x => x.Price);
+                else if (sortBy == "type")
+                    products = products.OrderBy(x => x.ProductType);
+                else if (sortBy == "brand")
+                    products = products.OrderBy(x => x.ProductBrand);
+                else
+                    products = products.OrderBy(x => x.Id);
+            }
+
+            int totalCount = products.Count();
+            int page = paging.PageNumber > 0 ? paging.PageNumber : 1;
+            int pageSize = paging.PageSize > 0 ? paging.PageSize : 10;
+
+            var list = await products.ToListAsync();
+            PagedProductList paged = new PagedProductList();
+            decimal tmp = (decimal)totalCount / pageSize;
+            paged.TotalCount = totalCount;
+            paged.PageSize = pageSize;
+            paged.TotalPages = (int)Math.Ceiling(tmp);
+            paged.Page = page;
+            paged.Products = list;
+            paged.SortBy = sortBy;
+            paged.SortOrder = sortOrder;
+
+            return paged;
         }
 
-        public async Task<IReadOnlyList<ProductType>> GetProductTypesAsync()
+        public async Task<IReadOnlyList<ProductType>> GetProductTypesAsync(string name)
         {
-            return await _context.ProductTypes.ToListAsync();
+            var types = await _context.ProductTypes.ToListAsync();
+            if(!String.IsNullOrEmpty(name)){
+                types = types.Where(x => !string.IsNullOrEmpty(x.Name) && x.Name.ToLower().StartsWith(name.ToLower())).ToList();
+            }
+            return types;
+        }
+
+        public async Task<IReadOnlyList<ProductBrand>> GetProductBrandsAsync(string name)
+        {
+            var brands = await _context.ProductBrands.ToListAsync();
+            if(!String.IsNullOrEmpty(name)){
+                brands = brands.Where(x => !string.IsNullOrEmpty(x.Name) && x.Name.ToLower().StartsWith(name.ToLower())).ToList();
+            }
+            return brands;
         }
     }
 }

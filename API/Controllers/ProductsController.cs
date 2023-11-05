@@ -2,6 +2,7 @@ using API.DTO;
 using AutoMapper;
 using Core.Entities;
 using Core.Interfaces;
+using Core.Util;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -20,11 +21,25 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<ProductDto>>> GetProducts()
+        [ProducesResponseType(typeof(PagedProductsDto), 200)]
+        public async Task<ActionResult<PagedProductsDto>> GetProducts(
+            [FromQuery(Name = "id")] int id,
+            [FromQuery(Name = "from-amount")] int fromAmount,
+            [FromQuery(Name = "to-amount")] int toAmount,
+            [FromQuery(Name = "name")] string name,
+            [FromQuery(Name = "type")] string type,
+            [FromQuery(Name = "brand")] string brand,
+            [FromQuery(Name = "page-size")] int pageSize,
+            [FromQuery(Name = "page")] int page, 
+            [FromQuery(Name = "sort-by")] string sortBy,
+            [FromQuery(Name = "sort-order")] string sortOrder
+        )
         {
-            var products = await _productRepository.GetProductsAsync();
-
-            return Ok(_mapper.Map<IReadOnlyList<ProductDto>>(products));
+            var sorting = new Sorting(sortOrder, sortBy);
+            var paging = new Paging(pageSize, page);
+            var response = await _productRepository.GetProductsAsync(id, fromAmount, toAmount, name, type, brand, paging, sorting);
+            PagedProductsDto products = _mapper.Map<PagedProductsDto>(response);
+            return StatusCode(200, products);
         }
 
         [HttpGet("{id}")]
@@ -35,15 +50,15 @@ namespace API.Controllers
         }
 
         [HttpGet("brands")]
-        public async Task<ActionResult<IReadOnlyList<ProductBrand>>> GetProductBrands()
+        public async Task<ActionResult<IReadOnlyList<ProductBrand>>> GetProductBrands([FromQuery(Name = "name")] string name)
         {
-            return Ok(await _productRepository.GetProductBrandsAsync());
+            return Ok(await _productRepository.GetProductBrandsAsync(name));
         }
 
         [HttpGet("types")]
-        public async Task<ActionResult<IReadOnlyList<ProductBrand>>> GetProductTypes()
+        public async Task<ActionResult<IReadOnlyList<ProductBrand>>> GetProductTypes([FromQuery(Name = "name")] string name)
         {
-            return Ok(await _productRepository.GetProductTypesAsync());
+            return Ok(await _productRepository.GetProductTypesAsync(name));
         }
         
     }
