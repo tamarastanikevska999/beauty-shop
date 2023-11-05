@@ -1,0 +1,18 @@
+.mat-toolbar a {
+    color: #ffffff; /* Link text color */
+    text-decoration: none; /* Remove underline */
+    padding: 8px 12px; /* Add some padding around the links */
+    margin: 0 8px; /* Add spacing between links */
+    border: 1px solid transparent; /* Add a border */
+    border-radius: 4px; /* Rounded corners */
+    transition: background-color 0.2s, border-color 0.2s; /* Smooth transition effect */
+  }
+  
+  .mat-toolbar a:hover {
+    background-color: #ffffff; /* Background color on hover */
+    color: #1976D2; /* Text color on hover */
+    border-color: #1976D2; /* Border color on hover */
+  }
+  .spacer {
+    flex: 1 1 auto;
+  }
