@@ -7,5 +7,5 @@ export interface PagedList<T>{
     totalPages?: number;
     sortOrder?: SortOrderEnum;
     sortBy?: string;
-    products?: T;
+    items?: T;
   }

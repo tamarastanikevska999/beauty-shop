@@ -1,9 +1,29 @@
+
+:host {
+  display: flex;
+}
+
+.filters-section {
+  width: 30%;
+  padding: 16px;
+  .select {
+    width: 100%;
+  }
+}
+
+.products-section {
+  width: 60%;
+  padding: 16px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Three columns with equal width */
+  grid-gap: 16px; /* Spacing between cards */
+}
+
 .product-card {
-    width: 80%; /* Set the desired width */
-    max-width: 600px; /* Set the maximum width if needed */
-    margin: 16px auto; /* Center the card horizontally with auto margin */
-  }
-  
-  img {
-    max-width: 100%;
-  }
+  width: 100%; /* Full width of the grid cell */
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
