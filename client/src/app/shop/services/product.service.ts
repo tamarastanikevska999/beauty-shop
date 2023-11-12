@@ -5,12 +5,13 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { PagedList } from '../model/pagedList';
 import { ProductType } from '../model/productType';
 import { ProductBrand } from '../model/productBrand';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
-  url = 'https://localhost:5001'
+  url = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
 
@@ -24,22 +25,22 @@ export class ProductService {
     if(filters){
       params = filters;
     }
-    const builder = this.http.get<PagedList<Product[]>>(this.url + '/products', {params});
+    const builder = this.http.get<PagedList<Product[]>>(this.url + 'products', {params});
     return builder;
   }
 
   public getProduct(id: number): Observable<Product> {
-    const builder = this.http.get<Product>(this.url + '/products/'+ id);
+    const builder = this.http.get<Product>(this.url + 'products/'+ id);
     return builder;
   }
 
   public getBrands(name?: string): Observable<ProductBrand[]> {
-    const builder = this.http.get<ProductBrand[]>(this.url + '/products/brands');
+    const builder = this.http.get<ProductBrand[]>(this.url + 'products/brands');
     return builder;
   }
 
   public getTypes(name?: string): Observable<ProductType[]> {
-    const builder = this.http.get<ProductType[]>(this.url + '/products/types');
+    const builder = this.http.get<ProductType[]>(this.url + 'products/types');
     return builder;
   }
 
