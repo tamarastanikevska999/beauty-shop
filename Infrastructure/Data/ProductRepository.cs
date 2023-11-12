@@ -79,6 +79,11 @@ namespace Infrastructure.Data
             int page = paging.PageNumber > 0 ? paging.PageNumber : 1;
             int pageSize = paging.PageSize > 0 ? paging.PageSize : 10;
 
+            if (paging != null)
+            {
+                products = products.Skip(pageSize * (page - 1)).Take(pageSize);
+            }
+
             var list = await products.ToListAsync();
             PagedProductList paged = new PagedProductList();
             decimal tmp = (decimal)totalCount / pageSize;
