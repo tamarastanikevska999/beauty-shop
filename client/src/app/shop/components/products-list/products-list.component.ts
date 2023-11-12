@@ -13,7 +13,7 @@ import { ProductType } from '../../model/productType';
 })
 export class ProductsListComponent implements OnInit, AfterViewInit {
   public formGroup: FormGroup;
-  // priceRange: number = 500; // Default value
+  selectedProduct= null;
   minPrice: number = 0;
   maxPrice: number = 1000;
   products: Product[] = [];
@@ -99,6 +99,10 @@ export class ProductsListComponent implements OnInit, AfterViewInit {
     this.formGroup.controls.brand.setValue('');
     this.formGroup.controls.type.setValue('');
     this.formGroup.controls.sort.setValue(this.sortOptions[0]);
+  }
+
+  openOverview(product: Product){
+    this.selectedProduct =product;
   }
 
 }

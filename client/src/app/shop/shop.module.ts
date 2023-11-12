@@ -10,16 +10,18 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatListModule } from '@angular/material/list';
-import { AppComponent } from '../app.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FooterComponent } from './components/footer/footer.component';
+import { ProductOverviewComponent } from './components/product-overview/product-overview.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
   declarations: [
     NavBarComponent,
     ProductsListComponent,
-    FooterComponent
+    FooterComponent,
+    ProductOverviewComponent
   ],
   imports: [
     CommonModule,
@@ -31,7 +33,8 @@ import { FooterComponent } from './components/footer/footer.component';
     MatSelectModule,
     MatSliderModule,
     MatButtonToggleModule,
-    MatListModule
+    MatListModule,
+    FormsModule
 
   ],
   exports: [

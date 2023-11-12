@@ -1,0 +1,23 @@
+<div class="product-detail" *ngIf="product">
+    <img [src]="product?.pictureUrl" alt="{{ product.name }}">
+    <div class="product-details">
+      <h2>{{ product.name }}</h2>
+      <p>{{ product.description }}</p>
+      <p class="price">{{ product.price | currency: 'EUR' }}</p>
+      <div class="rating">
+        <span *ngFor="let _ of [1, 2, 3, 4, 5]" class="star" (click)="rateProduct(_)">
+          &#9733;
+        </span>
+        <span class="rating-value">Rating: {{ product.rating }}</span>
+      </div>
+      <div class="comment-section">
+        <h3>Customer Reviews</h3>
+        <div *ngFor="let comment of product.comments" class="comment">
+          <p>{{ comment.user }}:</p>
+          <p>{{ comment.text }}</p>
+        </div>
+        <textarea [(ngModel)]="newComment" placeholder="Add your comment"></textarea>
+        <button (click)="addComment()">Add Comment</button>
+      </div>
+    </div>
+  </div>
