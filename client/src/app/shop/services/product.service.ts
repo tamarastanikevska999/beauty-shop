@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Product } from '../model/product';
+import { Product } from '../../shared/model/product';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { PagedList } from '../model/pagedList';
-import { ProductType } from '../model/productType';
-import { ProductBrand } from '../model/productBrand';
+import { PagedList } from '../../shared/model/pagedList';
+import { ProductType } from '../../shared/model/productType';
+import { ProductBrand } from '../../shared/model/productBrand';
 import { environment } from 'src/environments/environment';
+import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +15,7 @@ import { environment } from 'src/environments/environment';
 export class ProductService {
   url = environment.apiUrl;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private dialog: MatDialog) { }
 
   public getProducts(filters?: any): Observable<PagedList<Product[]>> {
     for (const key in filters) {
@@ -47,5 +49,11 @@ export class ProductService {
   camelToKebab(camelCase: any): any {
     Object.keys(camelCase).map(x=> x.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase());
     return camelCase
+  }
+
+  private openErrorDialog(errorMessage: string): void {
+    this.dialog.open(ErrorDialogComponent, {
+      data: errorMessage,
+    });
   }
 }

@@ -1,10 +1,10 @@
 import { error } from 'console';
-import { Product } from '../../model/product';
+import { Product } from '../../../shared/model/product';
 import { ProductService } from '../../services/product.service';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { ProductBrand } from '../../model/productBrand';
-import { ProductType } from '../../model/productType';
+import { ProductBrand } from '../../../shared/model/productBrand';
+import { ProductType } from '../../../shared/model/productType';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 
 @Component({

@@ -14,6 +14,7 @@ import { ProductOverviewComponent } from './components/product-overview/product-
 import { FormsModule } from '@angular/forms';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { ShopRoutingModule } from './shop-routing.module';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { ShopRoutingModule } from './shop-routing.module';
     MatButtonToggleModule,
     MatListModule,
     FormsModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatDialogModule
 
   ],
   exports: [
