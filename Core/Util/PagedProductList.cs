@@ -9,6 +9,6 @@ namespace Core.Util
     public class PagedProductList : PagedList
     {
         [DataMember(Name = "products", EmitDefaultValue = false)]
-        public System.Collections.Generic.List<Product> Products { get; set; }
+        public System.Collections.Generic.List<Product> Items { get; set; }
     }
 }

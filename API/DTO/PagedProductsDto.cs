@@ -10,6 +10,6 @@ namespace API.DTO
     public class PagedProductsDto: PagedList
     {
         [DataMember(Name = "products", EmitDefaultValue = false)]
-        public System.Collections.Generic.List<ProductDto> Products { get; set; }
+        public System.Collections.Generic.List<ProductDto> Items { get; set; }
     }
 }

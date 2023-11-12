@@ -86,7 +86,7 @@ namespace Infrastructure.Data
             paged.PageSize = pageSize;
             paged.TotalPages = (int)Math.Ceiling(tmp);
             paged.Page = page;
-            paged.Products = list;
+            paged.Items = list;
             paged.SortBy = sortBy;
             paged.SortOrder = sortOrder;
 
@@ -95,7 +95,7 @@ namespace Infrastructure.Data
 
         public async Task<IReadOnlyList<ProductType>> GetProductTypesAsync(string name)
         {
-            var types = await _context.ProductTypes.ToListAsync();
+            var types = await _context.ProductTypes.OrderBy(x => x.Name).ToListAsync();
             if(!String.IsNullOrEmpty(name)){
                 types = types.Where(x => !string.IsNullOrEmpty(x.Name) && x.Name.ToLower().StartsWith(name.ToLower())).ToList();
             }
@@ -104,7 +104,7 @@ namespace Infrastructure.Data
 
         public async Task<IReadOnlyList<ProductBrand>> GetProductBrandsAsync(string name)
         {
-            var brands = await _context.ProductBrands.ToListAsync();
+            var brands = await _context.ProductBrands.OrderBy(x => x.Name).ToListAsync();
             if(!String.IsNullOrEmpty(name)){
                 brands = brands.Where(x => !string.IsNullOrEmpty(x.Name) && x.Name.ToLower().StartsWith(name.ToLower())).ToList();
             }
