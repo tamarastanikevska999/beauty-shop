@@ -7,6 +7,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { HttpClientModule } from '@angular/common/http';
 import { ShopModule } from './shop/shop.module';
+import { HomeModule } from './home/home.module';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,7 @@ import { ShopModule } from './shop/shop.module';
     MatToolbarModule,
     MatButtonModule,
     HttpClientModule,
-    ShopModule
+    HomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

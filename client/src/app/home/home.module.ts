@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProductsListComponent } from './components/products-list/products-list.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -10,18 +9,22 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatListModule } from '@angular/material/list';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ProductOverviewComponent } from './components/product-overview/product-overview.component';
 import { FormsModule } from '@angular/forms';
 import {MatPaginatorModule} from '@angular/material/paginator';
-import { ShopRoutingModule } from './shop-routing.module';
+import { HomeOverviewComponent } from './components/home-overview/home-overview.component';
+import { NavBarComponent } from './components/nav-bar/nav-bar.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
   declarations: [
-    ProductsListComponent,
-    ProductOverviewComponent
+    HomeOverviewComponent,
+    NavBarComponent,
+    FooterComponent
   ],
   imports: [
+    RouterModule,
     CommonModule,
     ReactiveFormsModule,
     MatToolbarModule,
@@ -37,7 +40,9 @@ import { ShopRoutingModule } from './shop-routing.module';
 
   ],
   exports: [
-    ShopRoutingModule
+    NavBarComponent,
+    HomeOverviewComponent,
+    FooterComponent
   ]
 })
-export class ShopModule { }
+export class HomeModule { }
