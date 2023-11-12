@@ -67,4 +67,11 @@
         <button mat-button color="accent" (click)="openOverview(product)">View Details</button>
       </mat-card-actions>
     </mat-card>
+    <mat-paginator style="width: 100%;" #paginator *ngIf="products" [length]="totalCount"
+              [pageSize]="3"
+              [pageSizeOptions]="[2, 10, 25, 100]"
+              aria-label="Select page"
+              (page)="handlePage($event)"
+              >
+    </mat-paginator>
 </div>

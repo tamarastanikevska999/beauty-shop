@@ -14,6 +14,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FooterComponent } from './components/footer/footer.component';
 import { ProductOverviewComponent } from './components/product-overview/product-overview.component';
 import { FormsModule } from '@angular/forms';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { FormsModule } from '@angular/forms';
     MatSliderModule,
     MatButtonToggleModule,
     MatListModule,
-    FormsModule
+    FormsModule,
+    MatPaginatorModule
 
   ],
   exports: [
