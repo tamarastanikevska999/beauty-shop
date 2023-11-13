@@ -1,56 +1,93 @@
-.product-detail {
+
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1000px; /* Adjust max-width based on your preference */
+  body {
+    background-color: #b2dfdb; /* Mint color background */
+    color: #333;
     display: flex;
-    margin: 20px;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Ensure full height of the viewport */
+    margin: 0; /* Remove default body margin */
   }
+}
 
-  img {
-    max-width: 100%;
-    height: auto;
-  }
+.product-detail,
+.comment-table {
+  width: 48%; /* Adjust width based on your preference */
+  box-sizing: border-box; /* Include padding and border in the total width */
+  padding: 20px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff; /* White background */
+}
 
-  .product-details {
-    padding: 20px;
-  }
+.product-image img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
 
-  h2 {
-    margin-top: 0;
-  }
+.product-details {
+  flex: 1;
+  margin-left: 20px;
+}
 
-  .price {
-    font-weight: bold;
-    color: #007bff;
-  }
+.product-name {
+  font-size: 24px;
+  margin-bottom: 8px;
+}
 
-  .rating {
-    margin-top: 10px;
-  }
+.product-description {
+  font-size: 16px;
+  margin-bottom: 16px;
+}
+
+.product-price {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+.product-rating {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
 
   .star {
     font-size: 24px;
+    color: #fdd835;
     cursor: pointer;
-    color: #ffd700;
+    margin-right: 4px;
   }
 
   .rating-value {
-    margin-left: 10px;
+    margin-left: 8px;
   }
+}
 
-  .comment-section {
-    margin-top: 20px;
-  }
+.comment-table {
+  background-color: #ffffff; /* White background for the comment section */
+}
 
-  .comment {
-    border-bottom: 1px solid #ddd;
-    padding: 10px 0;
-  }
+h3 {
+  font-size: 20px;
+  margin-bottom: 16px;
+}
 
-  textarea {
-    width: 100%;
-    margin-top: 10px;
-    resize: vertical;
-  }
+.comment-input {
+  width: calc(100% - 16px);
+  margin-bottom: 8px;
+}
 
-  button {
-    margin-top: 10px;
-    cursor: pointer;
-  }
+.star-filled {
+  font-size: 18px;
+  color: #fdd835;
+  margin-right: 2px;
+}

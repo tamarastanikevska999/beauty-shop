@@ -22,6 +22,8 @@ export class ProductOverviewComponent implements OnInit{
     if(id){
       this.productService.getProduct(id).subscribe(res => {
         this.product = res;
+        this.product.comments = [];
+        
       });
     }
 
