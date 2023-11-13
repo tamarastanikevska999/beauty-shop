@@ -31,7 +31,7 @@ export class ProductService {
     return builder;
   }
 
-  public getProduct(id: number): Observable<Product> {
+  public getProduct(id: string): Observable<Product> {
     const builder = this.http.get<Product>(this.url + 'products/'+ id);
     return builder;
   }

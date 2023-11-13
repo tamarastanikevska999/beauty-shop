@@ -1,3 +1,4 @@
+import { SharedModule } from './../shared/shared.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductsListComponent } from './components/products-list/products-list.component';
@@ -15,6 +16,7 @@ import { FormsModule } from '@angular/forms';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { ShopRoutingModule } from './shop-routing.module';
 import { MatDialogModule } from '@angular/material/dialog';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
@@ -24,6 +26,7 @@ import { MatDialogModule } from '@angular/material/dialog';
   ],
   imports: [
     CommonModule,
+    RouterModule,
     ReactiveFormsModule,
     MatToolbarModule,
     MatButtonModule,
@@ -35,8 +38,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatListModule,
     FormsModule,
     MatPaginatorModule,
-    MatDialogModule
-
+    MatDialogModule,
+    SharedModule
   ],
   exports: [
     ShopRoutingModule

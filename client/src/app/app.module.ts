@@ -6,8 +6,8 @@ import { AppComponent } from './app.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { HttpClientModule } from '@angular/common/http';
-import { ShopModule } from './shop/shop.module';
 import { HomeModule } from './home/home.module';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -19,6 +19,7 @@ import { HomeModule } from './home/home.module';
     BrowserAnimationsModule,
     MatToolbarModule,
     MatButtonModule,
+    MatDialogModule,
     HttpClientModule,
     HomeModule
   ],
