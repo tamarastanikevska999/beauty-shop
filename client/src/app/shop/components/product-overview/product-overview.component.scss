@@ -62,7 +62,14 @@
 
   .star {
     font-size: 24px;
-    color: #fdd835;
+    color: #4caf50; /* Mint color for empty stars */
+    cursor: pointer;
+    margin-right: 4px;
+  }
+
+  .star-filled {
+    font-size: 24px;
+    color: #ccc; /* Grey color for filled stars */
     cursor: pointer;
     margin-right: 4px;
   }

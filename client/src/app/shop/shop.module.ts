@@ -18,12 +18,14 @@ import { ShopRoutingModule } from './shop-routing.module';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTableModule } from '@angular/material/table';
 import { RouterModule } from '@angular/router';
+import { ProductItemComponent } from './components/product-item/product-item.component';
 
 
 @NgModule({
   declarations: [
     ProductsListComponent,
-    ProductOverviewComponent
+    ProductOverviewComponent,
+    ProductItemComponent
   ],
   imports: [
     CommonModule,

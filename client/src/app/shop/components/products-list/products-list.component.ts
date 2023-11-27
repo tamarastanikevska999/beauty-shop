@@ -27,7 +27,7 @@ export class ProductsListComponent implements OnInit, AfterViewInit {
     "type": null,
     "brand": null,
     "page": 1,
-    "page-size": 3
+    "page-size": 5
   };
   sortOptions = [
     {name: 'Alphabetical', sortBy: 'name',sortOrder: 'desc'},

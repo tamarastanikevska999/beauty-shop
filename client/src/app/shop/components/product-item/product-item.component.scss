@@ -1,0 +1,35 @@
+
+
+/* YourComponent.component.scss */
+
+.card {
+    background-color: #ffffff; /* Mint background color */
+    color: #555454; /* Text color */
+    border-radius: 8px; /* Rounded corners */
+    overflow: hidden; /* Hide overflowing content */
+    box-shadow: 0 4px 8px rgba(24, 23, 23, 0.1); /* Box shadow for a subtle lift */
+  }
+  
+  .title,
+  .subtitle {
+    color: #004d40; /* Darker color for titles */
+  }
+  
+  .content {
+    padding: 16px; /* Add some padding to the content */
+  }
+  
+  .actions {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .btn {
+    background-color: #b2d5be; /* Darker color for buttons */
+    color: #535353; /* Text color for buttons */
+  }
+  
+  .btn:hover {
+    background-color: #888a8a; /* Darker color on hover */
+  }
+  
