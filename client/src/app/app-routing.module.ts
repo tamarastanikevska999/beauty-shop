@@ -5,6 +5,7 @@ import { HomeOverviewComponent } from './home/components/home-overview/home-over
 const routes: Routes = [
   {path: '', component: HomeOverviewComponent},
   {path: 'products', loadChildren: () => import('./shop/shop.module').then(m => m.ShopModule)},
+  {path: 'basket', loadChildren: () => import('./basket/basket.module').then(m => m.BasketModule)},
   {path: '**', redirectTo: '', pathMatch: 'full'},
 ];
 
