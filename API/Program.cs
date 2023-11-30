@@ -14,6 +14,7 @@ internal class Program
         // Add services to the container.
         builder.Services.AddControllers();
         builder.Services.AddAppServices(builder.Configuration);
+        builder.Services.AddIdentityServices(builder.Configuration);
 
         var app = builder.Build();
 
