@@ -1,9 +1,13 @@
 using System.Reflection;
 using API.Mappers;
 using API.Utility.Extensions;
+using Core.Entities.Identity;
 using Core.Interfaces;
 using Infrastructure.Data;
 using Infrastructure.Data.Seed;
+using Infrastructure.Identity;
+using Infrastructure.Identity.Seed;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 internal class Program
 {
@@ -28,6 +32,7 @@ internal class Program
         // app.UseHttpsRedirection();
 
         app.UseCors("CorsPolicy");
+        app.UseAuthentication();
         app.UseAuthorization();
 
         app.MapControllers();
@@ -36,10 +41,14 @@ internal class Program
         using var scope = app.Services.CreateScope();
         var services = scope.ServiceProvider;
         var context = services.GetRequiredService<StoreContext>();
+        var identityContext = services.GetRequiredService<AppIdentityDbContext>();
+        var userManager = services.GetRequiredService<UserManager<ShopUser>>();
         var logger = services.GetRequiredService<ILogger<Program>>();
         try
         {
             await context.Database.MigrateAsync();
+            await identityContext.Database.MigrateAsync();
+            await AppIdentityDbContextSeed.SeedUsersAsync(userManager);
             await DbSeedData.SeedData(context);
         }
         catch (Exception ex)
