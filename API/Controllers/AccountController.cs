@@ -1,23 +1,30 @@
 using API.DTO;
 using AutoMapper;
 using Core.Entities.Identity;
+using Core.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
+    [ApiController]
+    [Route("account")]
     public class AccountController : ControllerBase
     {
         private readonly UserManager<ShopUser> _userManager;
         private readonly SignInManager<ShopUser> _signInManager;
+        private readonly ITokenService _tokenService;
         private readonly IMapper _mapper;
         public AccountController(UserManager<ShopUser> userManager, SignInManager<ShopUser> signInManager,
-            IMapper mapper)
+            ITokenService tokenService, IMapper mapper)
         {
             _mapper = mapper;
+            _tokenService = tokenService;
             _signInManager = signInManager;
             _userManager = userManager;
         }
+
+        
 
         [HttpPost("login")]
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
@@ -33,7 +40,7 @@ namespace API.Controllers
             return new UserDto
             {
                 Email = user.Email,
-                Token = "smth",
+                Token = _tokenService.CreateToken(user),
                 Username = user.UserName
             };
         }
@@ -54,7 +61,7 @@ namespace API.Controllers
             return new UserDto
             {
                 Username = user.UserName,
-                Token = "smth",
+                Token = _tokenService.CreateToken(user),
                 Email = user.Email
             };
         }

@@ -3,6 +3,7 @@ using AutoMapper;
 using Core.Entities;
 using Core.Interfaces;
 using Core.Util;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -21,6 +22,7 @@ namespace API.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         [ProducesResponseType(typeof(PagedProductsDto), 200)]
         public async Task<ActionResult<PagedProductsDto>> GetProducts(
             [FromQuery(Name = "id")] int id,
