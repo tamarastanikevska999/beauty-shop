@@ -1,0 +1,26 @@
+
+  .btn {
+    width: 100%;
+    background-color: #66cdaa; 
+    color: #ffffff;
+  }
+  .card{
+    min-width: 400px;
+    box-shadow: none;
+  }
+  
+  :host {
+    display: flex;
+    justify-content: center;
+    margin: 100px 0px;
+  }
+
+  .mat-form-field {
+    width: 100%;
+  }
+
+  mat-card-title,
+  mat-card-content {
+    display: flex;
+    justify-content: center;
+  }

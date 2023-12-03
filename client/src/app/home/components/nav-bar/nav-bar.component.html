@@ -8,8 +8,24 @@
         <a mat-button routerLink="/contact">Contact</a>
     </div>
     <span class="spacer"></span>
-    <div class="identity">
-        <a routerLink="/account/login" class="btn btn-outline-secondary me-2">Login</a>
-        <a routerLink="/account/register" class="btn btn-outline-secondary me-3">Sign up</a>
-    </div>
+    
+    
+        <ng-container *ngIf="(accountService.currentUser$ | async) === null">
+            <div class="identity">
+            <a routerLink="/account/login" class="btn btn-outline-secondary me-2">Login</a>
+            <a routerLink="/account/register" class="btn btn-outline-secondary me-3">Sign up</a>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="accountService.currentUser$ | async as user">
+            Welcome {{user.username}}
+            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                <mat-icon>menu</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="accountService.logout()">
+                  <mat-icon>logout</mat-icon>
+                  <span>Logout</span>
+                </button>
+              </mat-menu>
+        </ng-container>
 </mat-toolbar>
