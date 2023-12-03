@@ -6,6 +6,7 @@ const routes: Routes = [
   {path: '', component: HomeOverviewComponent},
   {path: 'products', loadChildren: () => import('./shop/shop.module').then(m => m.ShopModule)},
   {path: 'basket', loadChildren: () => import('./basket/basket.module').then(m => m.BasketModule)},
+  {path: 'account', loadChildren: () => import('./account/account.module').then(m => m.AccountModule)},
   {path: '**', redirectTo: '', pathMatch: 'full'},
 ];
 
