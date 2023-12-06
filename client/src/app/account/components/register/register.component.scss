@@ -1,0 +1,29 @@
+
+.btn {
+    width: 100%;
+    background-color: #66cdaa; 
+    color: #ffffff;
+  }
+  .card{
+    box-shadow: none;
+  }
+
+  .loginForm{
+    width: 400px;
+    .field{
+      width: 100%;
+      padding-top: 5px;
+    }
+  }
+  
+  :host {
+    display: flex;
+    justify-content: center;
+    margin: 100px 0px;
+  }
+
+  mat-card-title,
+  mat-card-content {
+    display: flex;
+    justify-content: center;
+  }

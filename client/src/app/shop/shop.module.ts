@@ -19,7 +19,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatTableModule } from '@angular/material/table';
 import { RouterModule } from '@angular/router';
 import { ProductItemComponent } from './components/product-item/product-item.component';
-
+import {MatGridListModule} from '@angular/material/grid-list';
 
 @NgModule({
   declarations: [
@@ -43,7 +43,8 @@ import { ProductItemComponent } from './components/product-item/product-item.com
     MatPaginatorModule,
     MatDialogModule,
     MatTableModule,
-    SharedModule
+    SharedModule,
+    MatGridListModule
   ],
   exports: [
     ShopRoutingModule

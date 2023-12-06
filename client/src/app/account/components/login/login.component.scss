@@ -5,18 +5,20 @@
     color: #ffffff;
   }
   .card{
-    min-width: 400px;
     box-shadow: none;
+  }
+
+  .loginForm{
+    width: 400px;
+    .field{
+      width: 100%;
+    }
   }
   
   :host {
     display: flex;
     justify-content: center;
     margin: 100px 0px;
-  }
-
-  .mat-form-field {
-    width: 100%;
   }
 
   mat-card-title,

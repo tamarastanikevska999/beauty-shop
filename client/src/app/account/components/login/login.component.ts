@@ -11,7 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class LoginComponent {
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', Validators.required)
+    password: new FormControl('',[Validators.required, Validators.minLength(6)])
   })
   returnUrl: string;
 
@@ -25,5 +25,10 @@ export class LoginComponent {
     this.accountService.login(this.loginForm.value).subscribe({
       next: () => this.router.navigateByUrl(this.returnUrl)
     })
+  }
+
+  hasError(controlName: string, error: string) {
+    const control = this.loginForm.get(controlName);
+    return control && control.hasError(error);
   }
 }
