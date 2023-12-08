@@ -3,36 +3,40 @@
 using System.Text.Json;
 using Core.Entities;
 using Core.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using StackExchange.Redis;
 
 namespace Infrastructure.Data
 {
     public class BasketRepository : IBasketRepository
     {
-        private readonly IDatabase _database;
-        public BasketRepository(IConnectionMultiplexer redis)
+        private readonly StoreContext _context;
+        public BasketRepository(StoreContext context)
         {
-            _database = redis.GetDatabase();
+            _context = context;
         }
 
         public async Task<CustomerBasket> GetBasketAsync(string basketId)
         {
-            var data = await _database.StringGetAsync(basketId);
-
-            return data.IsNullOrEmpty ? null : JsonSerializer.Deserialize<CustomerBasket>(data);
+            return await _context.CustomerBaskets.FirstOrDefaultAsync(x => x.Id == basketId);
         }
 
-        public async Task<bool> DeleteBasketAsync(string basketId)
+        public async Task<CustomerBasket> DeleteBasketAsync(string basketId)
         {
-            return await _database.KeyDeleteAsync(basketId);
+            var basket = await _context.CustomerBaskets.FirstOrDefaultAsync(x => x.Id == basketId);
+            var removed =_context.CustomerBaskets.Remove(basket);
+            _context.SaveChanges();
+            if (removed == null) return null;
+
+            return await GetBasketAsync(basket.Id);
         }
 
         public async Task<CustomerBasket> UpdateBasketAsync(CustomerBasket basket)
         {
-            var updated = await _database.StringSetAsync(basket.Id, JsonSerializer.Serialize(basket),
-                TimeSpan.FromDays(10));
+            var updated = _context.CustomerBaskets.Update(basket);
+            _context.SaveChanges();
 
-            if (!updated) return null;
+            if (updated == null) return null;
 
             return await GetBasketAsync(basket.Id);
         }

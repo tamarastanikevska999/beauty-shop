@@ -1,5 +1,10 @@
+using System.Security.Claims;
+using API.DTO;
 using Core.Entities;
+using Core.Entities.Identity;
 using Core.Interfaces;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -9,9 +14,11 @@ namespace API.Controllers
     public class BasketController : ControllerBase
     {
         private readonly IBasketRepository _basketRepository;
-        public BasketController(IBasketRepository basketRepository)
+        private readonly UserManager<ShopUser> _userManager;
+        public BasketController(UserManager<ShopUser> userManager,IBasketRepository basketRepository)
         {
             _basketRepository = basketRepository;
+            _userManager = userManager;
         }
 
         [HttpGet("{id}")]
@@ -19,7 +26,17 @@ namespace API.Controllers
         {
             var basket = await _basketRepository.GetBasketAsync(id);
 
-            return Ok(basket ?? new CustomerBasket(id));
+            return Ok(basket);
+        }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<ActionResult<CustomerBasket>> GetCustomersBasket()
+        {
+            var email = HttpContext.User?.Claims?.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value;
+
+            var user = await _userManager.FindByEmailAsync(email);
+            return user.Basket;
         }
 
         [HttpPost]
