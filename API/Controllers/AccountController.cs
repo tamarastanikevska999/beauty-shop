@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 using API.DTO;
 using AutoMapper;
+using Core.Entities;
 using Core.Entities.Identity;
 using Core.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -14,13 +15,15 @@ namespace API.Controllers
     [Route("account")]
     public class AccountController : ControllerBase
     {
+        private readonly IBasketRepository _basketRepository;
         private readonly UserManager<ShopUser> _userManager;
         private readonly SignInManager<ShopUser> _signInManager;
         private readonly ITokenService _tokenService;
         private readonly IMapper _mapper;
         public AccountController(UserManager<ShopUser> userManager, SignInManager<ShopUser> signInManager,
-            ITokenService tokenService, IMapper mapper)
+            ITokenService tokenService, IMapper mapper,IBasketRepository basketRepository)
         {
+            _basketRepository = basketRepository;
             _mapper = mapper;
             _tokenService = tokenService;
             _signInManager = signInManager;
@@ -72,11 +75,19 @@ namespace API.Controllers
             var user = new ShopUser
             {
                 Email = registerDto.Email,
-                UserName = registerDto.Username
+                UserName = registerDto.Username,
+                FirstName = registerDto.FirstName,
+                LastName = registerDto.LastName
             };
 
             var result = await _userManager.CreateAsync(user, registerDto.Password);
 
+            var basket = new CustomerBasket
+            {
+                UserEmail = user.Email,
+            };
+            
+            var basketId =_basketRepository.CreateBasket(basket);
             if (!result.Succeeded) return BadRequest();
 
             return new UserDto

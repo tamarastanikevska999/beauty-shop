@@ -1,28 +1,24 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Infrastructure.Identity.Migrations
+namespace Infrastructure.Data.Migrations
 {
-    public partial class AddBasket : Migration
+    public partial class AddCustomerBasket : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "CustomerBasket",
+                name: "CustomerBaskets",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserEmail = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CustomerBasket", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_CustomerBasket_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                    table.PrimaryKey("PK_CustomerBaskets", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -31,21 +27,22 @@ namespace Infrastructure.Identity.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    BasketId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ProductName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     PictureUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Brand = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Type = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CustomerBasketId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    CustomerBasketId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_BasketItem", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_BasketItem_CustomerBasket_CustomerBasketId",
+                        name: "FK_BasketItem_CustomerBaskets_CustomerBasketId",
                         column: x => x.CustomerBasketId,
-                        principalTable: "CustomerBasket",
+                        principalTable: "CustomerBaskets",
                         principalColumn: "Id");
                 });
 
@@ -53,13 +50,6 @@ namespace Infrastructure.Identity.Migrations
                 name: "IX_BasketItem_CustomerBasketId",
                 table: "BasketItem",
                 column: "CustomerBasketId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CustomerBasket_UserId",
-                table: "CustomerBasket",
-                column: "UserId",
-                unique: true,
-                filter: "[UserId] IS NOT NULL");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -68,7 +58,7 @@ namespace Infrastructure.Identity.Migrations
                 name: "BasketItem");
 
             migrationBuilder.DropTable(
-                name: "CustomerBasket");
+                name: "CustomerBaskets");
         }
     }
 }

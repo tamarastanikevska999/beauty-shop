@@ -22,59 +22,6 @@ namespace Infrastructure.Identity.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("Core.Entities.BasketItem", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Brand")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CustomerBasketId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("PictureUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("ProductName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Type")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CustomerBasketId");
-
-                    b.ToTable("BasketItem");
-                });
-
-            modelBuilder.Entity("Core.Entities.CustomerBasket", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId")
-                        .IsUnique()
-                        .HasFilter("[UserId] IS NOT NULL");
-
-                    b.ToTable("CustomerBasket");
-                });
-
             modelBuilder.Entity("Core.Entities.Identity.ShopUser", b =>
                 {
                     b.Property<string>("Id")
@@ -282,22 +229,6 @@ namespace Infrastructure.Identity.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Core.Entities.BasketItem", b =>
-                {
-                    b.HasOne("Core.Entities.CustomerBasket", null)
-                        .WithMany("Items")
-                        .HasForeignKey("CustomerBasketId");
-                });
-
-            modelBuilder.Entity("Core.Entities.CustomerBasket", b =>
-                {
-                    b.HasOne("Core.Entities.Identity.ShopUser", "User")
-                        .WithOne("Basket")
-                        .HasForeignKey("Core.Entities.CustomerBasket", "UserId");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -347,16 +278,6 @@ namespace Infrastructure.Identity.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Core.Entities.CustomerBasket", b =>
-                {
-                    b.Navigation("Items");
-                });
-
-            modelBuilder.Entity("Core.Entities.Identity.ShopUser", b =>
-                {
-                    b.Navigation("Basket");
                 });
 #pragma warning restore 612, 618
         }

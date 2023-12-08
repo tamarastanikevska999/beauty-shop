@@ -22,21 +22,25 @@ namespace API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<CustomerBasket>> GetBasketById(string id)
+        public async Task<ActionResult<CustomerBasket>> GetBasketById(Guid id)
         {
             var basket = await _basketRepository.GetBasketAsync(id);
 
             return Ok(basket);
         }
 
-        [HttpGet]
+        [HttpGet("user/{email}")]
         [Authorize]
-        public async Task<ActionResult<CustomerBasket>> GetCustomersBasket()
+        public async Task<ActionResult<string>> GetCustomersBasket(string email)
         {
-            var email = HttpContext.User?.Claims?.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value;
+            var user =await _userManager.FindByEmailAsync(email);
+            var basket = await _basketRepository.GetCustomersBasketAsync(user.Email);
 
-            var user = await _userManager.FindByEmailAsync(email);
-            return user.Basket;
+            if (basket == null)
+            {
+                return NotFound();
+            }
+            return Ok(basket);;
         }
 
         [HttpPost]
@@ -47,10 +51,10 @@ namespace API.Controllers
             return Ok(updatedBasket);
         }
 
-        [HttpDelete("{id}")]
-        public async Task DeleteBasketAsync(string id)
+        [HttpDelete("{email}")]
+        public async Task DeleteBasketAsync(string email)
         {
-            await _basketRepository.DeleteBasketAsync(id);
+            await _basketRepository.DeleteCustomersBasketAsync(email);
         }
     }
 }

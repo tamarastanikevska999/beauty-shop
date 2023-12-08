@@ -19,10 +19,6 @@ namespace Infrastructure.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<ShopUser>()
-            .HasOne(b => b.Basket)
-            .WithOne(c => c.User)
-            .HasForeignKey<CustomerBasket>(b => b.UserId);
         }
     }
 }

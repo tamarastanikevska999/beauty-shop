@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Data.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    [Migration("20231208021434_UpdateBasket")]
-    partial class UpdateBasket
+    [Migration("20231208221840_AddCustomerBasket")]
+    partial class AddCustomerBasket
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,11 +32,14 @@ namespace Infrastructure.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<Guid>("BasketId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Brand")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CustomerBasketId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid?>("CustomerBasketId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("PictureUrl")
                         .HasColumnType("nvarchar(max)");
@@ -62,80 +65,16 @@ namespace Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Core.Entities.CustomerBasket", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<string>("UserEmail")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId")
-                        .IsUnique()
-                        .HasFilter("[UserId] IS NOT NULL");
 
                     b.ToTable("CustomerBaskets");
-                });
-
-            modelBuilder.Entity("Core.Entities.Identity.ShopUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ShopUser");
                 });
 
             modelBuilder.Entity("Core.Entities.Product", b =>
@@ -212,15 +151,6 @@ namespace Infrastructure.Data.Migrations
                         .HasForeignKey("CustomerBasketId");
                 });
 
-            modelBuilder.Entity("Core.Entities.CustomerBasket", b =>
-                {
-                    b.HasOne("Core.Entities.Identity.ShopUser", "User")
-                        .WithOne("Basket")
-                        .HasForeignKey("Core.Entities.CustomerBasket", "UserId");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Core.Entities.Product", b =>
                 {
                     b.HasOne("Core.Entities.ProductBrand", "ProductBrand")
@@ -243,11 +173,6 @@ namespace Infrastructure.Data.Migrations
             modelBuilder.Entity("Core.Entities.CustomerBasket", b =>
                 {
                     b.Navigation("Items");
-                });
-
-            modelBuilder.Entity("Core.Entities.Identity.ShopUser", b =>
-                {
-                    b.Navigation("Basket");
                 });
 #pragma warning restore 612, 618
         }
