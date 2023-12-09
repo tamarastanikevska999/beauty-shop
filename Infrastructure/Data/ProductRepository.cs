@@ -115,5 +115,65 @@ namespace Infrastructure.Data
             }
             return brands;
         }
+
+        public async Task<IReadOnlyList<ProductReview>> GetProductReviewsAsync(int id)
+        {
+            return await _context.ProductReviews.Where(a=>a.ProductId==id).ToListAsync();
+        }
+
+        public async Task<Product> GetTopRatedProductAsync()
+        {
+            var reviews = await _context.ProductReviews.ToListAsync();
+            if (reviews.Count() == 0)
+                return null;
+            var prod = reviews[0].ProductId;
+            float max = 0;
+            foreach(var r in reviews)
+            {
+                var avg = GetProductRatingAsync(r.Id).Result;
+                if (avg > max)
+                {
+                    max = avg;
+                    prod = r.Id;
+                }
+            }
+            var product = GetProductByIdAsync(prod).Result;
+            return product;
+
+        }
+
+        public async Task<float> GetProductRatingAsync(int productId)
+        {
+            var reviews = await _context.ProductReviews.Where(a=>a.ProductId==productId).ToListAsync();
+            float sum = 0;
+            foreach (var r in reviews)
+                sum = sum + r.Rating;
+            if (reviews.Count() > 0)
+                return sum / reviews.Count;
+            else
+                return 0;
+        }
+
+        public async Task AddProductReviewAsync(int productId, string userEmail, string comment, int rating)
+        {
+            var product = await _context.Products.FirstOrDefaultAsync(x => x.Id == productId);
+
+            if (product != null)
+            {
+                ProductReview review = new ProductReview
+                {
+                    ProductId = product.Id,
+                    UserEmail = userEmail,
+                    Comment = comment,
+                    Rating = rating
+                };
+
+                product.Reviews.Add(review);
+                _context.ProductReviews.Add(review);
+                _context.Products.Update(product);
+
+                await _context.SaveChangesAsync(); // Use async SaveChanges
+            }
+        }
     }
 }

@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using API.DTO;
 using AutoMapper;
 using Core.Entities;
@@ -22,7 +23,6 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         [ProducesResponseType(typeof(PagedProductsDto), 200)]
         public async Task<ActionResult<PagedProductsDto>> GetProducts(
             [FromQuery(Name = "id")] int id,
@@ -61,6 +61,31 @@ namespace API.Controllers
         public async Task<ActionResult<IReadOnlyList<ProductBrand>>> GetProductTypes([FromQuery(Name = "name")] string name)
         {
             return Ok(await _productRepository.GetProductTypesAsync(name));
+        }
+
+        [HttpGet("reviews/{id}")]
+        public async Task<ActionResult<IReadOnlyList<ProductReview>>> GetProductReviews(int id)
+        {
+            return Ok(await _productRepository.GetProductReviewsAsync(id));
+        }
+
+        [HttpGet("reviews/rating/{id}")]
+        public async Task<ActionResult<IReadOnlyList<ProductReview>>> GetProductRatings( int id)
+        {
+            return Ok(await _productRepository.GetProductRatingAsync(id));
+        }
+
+        [HttpGet("reviews/top-rated")]
+        public async Task<ActionResult<Product>> GetTopRated()
+        {
+            return Ok(await _productRepository.GetTopRatedProductAsync());
+        }
+
+        [HttpPost("reviews")]
+        public async Task<ActionResult> AddProductReview([Required][FromBody] ReviewDto review)
+        {
+            await _productRepository.AddProductReviewAsync(review.ProductId, review.UserEmail, review.Comment, review.Rating);
+            return Ok();
         }
         
     }

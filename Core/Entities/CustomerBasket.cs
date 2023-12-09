@@ -9,6 +9,10 @@ namespace Core.Entities
 {
     public class CustomerBasket
     {
+        public CustomerBasket()
+        {
+            Items = new List<BasketItem>();
+        }
         [Key]
         public Guid Id { get; set; }
         public string UserEmail { get; set; }
