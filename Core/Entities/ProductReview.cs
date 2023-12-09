@@ -1,14 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace Core.Entities
 {
-    public class ProductReview
+    public class ProductReview : BaseEntity
     {
-        public Product Product { get; set; }
+        public int ProductId { get; set; }
+        public string UserEmail { get; set; }
         public string Comment { get; set; }
-        public int Grade { get; set; }
+        public int Rating { get; set; }
     }
 }
