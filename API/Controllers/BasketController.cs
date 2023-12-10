@@ -30,11 +30,9 @@ namespace API.Controllers
         }
 
         [HttpGet("user/{email}")]
-        [Authorize]
         public async Task<ActionResult<string>> GetCustomersBasket(string email)
         {
-            var user =await _userManager.FindByEmailAsync(email);
-            var basket = await _basketRepository.GetCustomersBasketAsync(user.Email);
+            var basket = await _basketRepository.GetCustomersBasketAsync(email);
 
             if (basket == null)
             {
@@ -43,7 +41,7 @@ namespace API.Controllers
             return Ok(basket);;
         }
 
-        [HttpPost]
+        [HttpPut]
         public async Task<ActionResult<CustomerBasket>> UpdateBasket(CustomerBasket basket)
         {
             var updatedBasket = await _basketRepository.UpdateBasketAsync(basket);

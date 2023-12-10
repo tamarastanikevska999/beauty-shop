@@ -48,7 +48,7 @@ internal class Program
         {
             await context.Database.MigrateAsync();
             await identityContext.Database.MigrateAsync();
-            await AppIdentityDbContextSeed.SeedUsersAsync(userManager);
+            await AppIdentityDbContextSeed.SeedUsersAsync(userManager,context);
             await DbSeedData.SeedData(context);
         }
         catch (Exception ex)
