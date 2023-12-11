@@ -1,5 +1,6 @@
 export interface ProductInBasket {
-    id: number;
+    basketId: number;
+    productId: number;
     name: string;
     price: number;
     quantity: number;
@@ -10,5 +11,6 @@ export interface ProductInBasket {
 
 export interface Basket {
     id: string;
+    userEmail: string;
     items: ProductInBasket[];
 }

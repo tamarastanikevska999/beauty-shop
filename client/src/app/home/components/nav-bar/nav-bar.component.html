@@ -4,12 +4,9 @@
     <div class="functionality">
         <a mat-button routerLink="/">Home</a>
         <a mat-button routerLink="/products">Products</a>
-        <a mat-button routerLink="/basket">Shopping Cart</a>
         <a mat-button routerLink="/contact">Contact</a>
     </div>
     <span class="spacer"></span>
-    
-    
         <ng-container *ngIf="(accountService.currentUser$ | async) === null">
             <div class="identity">
             <a routerLink="/account/login" class="btn btn-outline-secondary me-2">Login</a>
@@ -27,5 +24,8 @@
                   <span>Logout</span>
                 </button>
               </mat-menu>
+              <a  mat-button routerLink="/basket">
+                <i class="fa fa-shopping-cart fa-2x me-5 text-dark"></i>
+              </a>
         </ng-container>
 </mat-toolbar>

@@ -18,12 +18,12 @@ namespace Infrastructure.Data
 
         public async Task<CustomerBasket> GetBasketAsync(Guid basketId)
         {
-            return await _context.CustomerBaskets.FirstOrDefaultAsync(x => x.Id == basketId);
+            return await _context.CustomerBaskets.Include(p => p.Items).FirstOrDefaultAsync(x => x.Id == basketId);
         }
 
         public async Task<CustomerBasket> GetCustomersBasketAsync(string email)
         {
-            return await _context.CustomerBaskets.FirstOrDefaultAsync(x => x.UserEmail == email);
+            return await _context.CustomerBaskets.Include(p => p.Items).FirstOrDefaultAsync(x => x.UserEmail == email);
         }
 
         public async Task<CustomerBasket> DeleteCustomersBasketAsync(string email)
@@ -38,11 +38,8 @@ namespace Infrastructure.Data
 
         public async Task<CustomerBasket> UpdateBasketAsync(CustomerBasket basket)
         {
-            var updated = _context.CustomerBaskets.Update(basket);
-            _context.SaveChanges();
-
-            if (updated == null) return null;
-
+            _context.CustomerBaskets.Update(basket);
+            await _context.SaveChangesAsync();
             return await GetBasketAsync(basket.Id);
         }
 
