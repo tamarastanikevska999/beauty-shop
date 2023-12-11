@@ -34,3 +34,15 @@
 .spacer {
   flex: 1 1 auto;
 }
+
+.cart-no {
+  position: absolute;
+  min-height: 25px;
+  min-width: 25px;
+  border-radius: 50%;
+  background: rgb(111, 196, 157);
+  color: white;
+  text-align: center;
+  top: -12px;
+  right: 32px;
+}

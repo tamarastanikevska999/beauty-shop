@@ -24,8 +24,11 @@
                   <span>Logout</span>
                 </button>
               </mat-menu>
-              <a  mat-button routerLink="/basket">
-                <i class="fa fa-shopping-cart fa-2x me-5 text-dark"></i>
-              </a>
+              <a routerLink="/basket" class="position-relative">
+                <i class="fa fa-shopping-cart fa-2x me-5 text-secondary"></i>
+                <div *ngIf="(basketService.basketSource$ | async) as basket" class="cart-no">
+                    {{getCount(basket.items)}}
+                </div>
+            </a>
         </ng-container>
 </mat-toolbar>
