@@ -20,12 +20,15 @@ import { MatTableModule } from '@angular/material/table';
 import { RouterModule } from '@angular/router';
 import { ProductItemComponent } from './components/product-item/product-item.component';
 import {MatGridListModule} from '@angular/material/grid-list';
+import { RateProductDialogComponent } from './components/product-overview/rate-product-dialog/rate-product-dialog.component';
+import {MatDividerModule} from '@angular/material/divider';
 
 @NgModule({
   declarations: [
     ProductsListComponent,
     ProductOverviewComponent,
-    ProductItemComponent
+    ProductItemComponent,
+    RateProductDialogComponent
   ],
   imports: [
     CommonModule,
@@ -44,7 +47,8 @@ import {MatGridListModule} from '@angular/material/grid-list';
     MatDialogModule,
     MatTableModule,
     SharedModule,
-    MatGridListModule
+    MatGridListModule,
+    MatDividerModule
   ],
   exports: [
     ShopRoutingModule

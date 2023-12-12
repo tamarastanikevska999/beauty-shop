@@ -8,15 +8,15 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-      <!-- Filter by Brand -->
-      <!-- <mat-form-field class="select">
+
+      <mat-form-field class="select">
         <mat-label>Brand</mat-label>
         <mat-select formControlName="brand">
           <mat-option *ngFor="let brand of brands" [value]="brand.name">
             {{ brand.name }}
           </mat-option>
         </mat-select>
-      </mat-form-field> -->
+      </mat-form-field>
   
       <!-- Filter by Type -->
       <mat-form-field class="select">
@@ -46,12 +46,12 @@
           {{ option.name }}
         </mat-button-toggle>
       </mat-button-toggle-group> -->
-      <h5>Brand</h5>
+      <!-- <h5>Brand</h5>
       <mat-selection-list formControlName="brand" name="buttonOptions" aria-label="Brand" [multiple]="false">
           <mat-list-option *ngFor="let option of brands" [value]="option.name">{{option.name}}</mat-list-option>
-      </mat-selection-list>
+      </mat-selection-list> -->
   
-      <button mat-raised-button color="warn" (click)="resetSelection()">Reset</button>
+      <button mat-raised-button (click)="resetSelection()">Reset</button>
   
     </div>
     <div class="products-section">

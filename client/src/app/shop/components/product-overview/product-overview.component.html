@@ -9,44 +9,49 @@
     <p class="product-price">{{ product.price | currency: 'EUR' }}</p>
 
     <div class="product-rating">
-      <span *ngFor="let _ of  [1, 2, 3, 4, 5]" class="star" (click)="rateProduct(_)">
-        &#9733;
+      <span *ngFor="let _ of [1, 2, 3, 4, 5]" class="star">
+        <ng-container *ngIf="_ <= averageRating ; else grayStar">&#9733;</ng-container>
+        <ng-template #grayStar>&#9734;</ng-template>
       </span>
-      <span class="rating-value">Rating: {{ averageRating || product.rating }}</span>
+      <span class="rating-value">Rating: {{ averageRating | number:'1.0-1' }}</span>
     </div>
   </div>
 </div>
 
 <div class="comment-table container">
-  <h3>Customer Reviews</h3>
-  <table  *ngIf="product && product.comments.length >0 " mat-table [dataSource]="product.comments" class="mat-elevation-z8">
+  <!-- <mat-divider></mat-divider>   -->
+  <ng-container class="row">
+  <table  *ngIf="product && product.comments.length >0 " mat-table [dataSource]="product.comments" class="comments">
 
     <!-- User Column -->
     <ng-container matColumnDef="user">
       <th mat-header-cell *matHeaderCellDef>User</th>
-      <td mat-cell *matCellDef="let comment">{{ comment.user }}</td>
+      <td mat-cell *matCellDef="let comment">{{ comment.userEmail }}</td>
     </ng-container>
 
     <!-- Text Column -->
     <ng-container matColumnDef="text">
-      <th mat-header-cell *matHeaderCellDef>Text</th>
-      <td mat-cell *matCellDef="let comment">{{ comment.text }}</td>
+      <th mat-header-cell *matHeaderCellDef>Comment</th>
+      <td mat-cell *matCellDef="let comment">{{ comment.comment }}</td>
     </ng-container>
 
     <!-- Rating Column -->
     <ng-container matColumnDef="rating">
       <th mat-header-cell *matHeaderCellDef>Rating</th>
-      <td mat-cell *matCellDef="let comment">
-        <span *ngFor="let _ of getRatingArray(comment.rating)" class="star-filled">
-          &#9733;
-        </span>
-      </td>
+      <td mat-cell *matCellDef="let comment">{{ comment.rating }}</td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="['user', 'text', 'rating']"></tr>
     <tr mat-row *matRowDef="let row; columns: ['user', 'text', 'rating'];"></tr>
   </table>
 
-  <textarea [(ngModel)]="newComment" placeholder="Add your comment" class="comment-input"></textarea>
-  <button mat-button (click)="addComment()">Add Comment</button>
+</ng-container>
 </div>
+
+<div class="comment-table container">
+    <textarea [(ngModel)]="newComment" placeholder="Add your comment" class="comment-input"></textarea>
+    <mat-card-actions class='comment-card-action'>
+      <button mat-button (click)="addComment()">Add Comment</button>
+    </mat-card-actions>
+</div>
+

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Product } from '../../shared/model/product';
+import { ProductReview } from '../../shared/model/productReview';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { PagedList } from '../../shared/model/pagedList';
 import { ProductType } from '../../shared/model/productType';
@@ -46,10 +47,31 @@ export class ProductService {
     return builder;
   }
 
+  getProductReviews(productId: string): Observable<ProductReview[]> {
+    const url = `${this.url}products/reviews/${productId}`;
+    return this.http.get<ProductReview[]>(url);
+  }
+
+  getProductRatings(productId: string): Observable<number> {
+    const url = `${this.url}products/reviews/rating/${productId}`;
+    return this.http.get<number>(url);
+  }
+
+  getTopRatedProduct(): Observable<Product> {
+    const url = `${this.url}products/reviews/top-rated`;
+    return this.http.get<Product>(url);
+  }
+
+  addProductReview(review: ProductReview): Observable<any> {
+    const url = `${this.url}products/reviews`;
+    return this.http.post(url, review);
+  }
+
   camelToKebab(camelCase: any): any {
     Object.keys(camelCase).map(x=> x.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase());
     return camelCase
   }
+
 
   private openErrorDialog(errorMessage: string): void {
     this.dialog.open(ErrorDialogComponent, {

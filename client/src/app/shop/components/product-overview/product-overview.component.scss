@@ -1,4 +1,4 @@
-
+// your-component.styles.scss or styles.css
 
 .container {
   display: flex;
@@ -11,7 +11,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Ensure full height of the viewport */
     margin: 0; /* Remove default body margin */
   }
 }
@@ -69,7 +68,7 @@
 
   .star-filled {
     font-size: 24px;
-    color: #ccc; /* Grey color for filled stars */
+    color: #fdd835; /* Yellow color for filled stars */
     cursor: pointer;
     margin-right: 4px;
   }
@@ -81,20 +80,73 @@
 
 .comment-table {
   background-color: #ffffff; /* White background for the comment section */
-}
 
-h3 {
-  font-size: 20px;
-  margin-bottom: 16px;
-}
+  table {
+    width: 100%;
+    border-collapse: collapse;
 
-.comment-input {
-  width: calc(100% - 16px);
-  margin-bottom: 8px;
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid #ccc;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f0f0f0; /* Light grey background for header */
+    }
+
+    tr:hover {
+      background-color: #f5f5f5; /* Light grey background on hover */
+    }
+  }
+
+  h3 {
+    font-size: 20px;
+    margin-bottom: 16px;
+  }
+
+  .comment-input {
+    width: calc(100% - 16px);
+    margin-bottom: 8px;
+    padding: 12px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  button {
+    background-color: #4caf50; /* Mint color for button background */
+    color: #fff;
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #45a049; /* Darker mint color on hover */
+    }
+  }
 }
 
 .star-filled {
   font-size: 18px;
   color: #fdd835;
   margin-right: 2px;
+}
+
+.comment-card-action {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 30%;
+}
+
+.comment-input{
+  width: 100%;
+  margin: 0 0 0 0;
+
+  textarea {
+    height: 60px;
+  }
 }

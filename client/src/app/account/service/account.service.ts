@@ -2,6 +2,7 @@ import { BasketService } from './../../basket/service/basket.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { error } from 'console';
 import { ReplaySubject, map, of, switchMap } from 'rxjs';
 import { User } from 'src/app/shared/model/user';
 import { environment } from 'src/environments/environment';
@@ -42,6 +43,7 @@ export class AccountService {
     return this.http.post<User>(this.baseUrl + 'account/login', values).pipe(
       switchMap(user => {
         localStorage.setItem('token', user.token);
+        localStorage.setItem('username', user.username);
         this.currentUserSource.next(user);
         return this.basketService.getCustomersBasket(user.email);
       })
@@ -52,6 +54,7 @@ export class AccountService {
     return this.http.post<User>(this.baseUrl + 'account/register', values).pipe(
       map(user => {
         localStorage.setItem('token', user.token);
+        localStorage.setItem('username', user.username);
         this.currentUserSource.next(user);
         return this.basketService.getCustomersBasket(user.email);
       })
@@ -60,6 +63,7 @@ export class AccountService {
 
   logout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('username');
     localStorage.removeItem('basket');
     this.currentUserSource.next(null);
     this.router.navigateByUrl('/');
@@ -68,4 +72,5 @@ export class AccountService {
   checkEmailExists(email: string) {
     return this.http.get<boolean>(this.baseUrl + 'account/check-email?email=' + email);
   }
+
 }
