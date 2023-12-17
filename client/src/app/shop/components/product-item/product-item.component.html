@@ -1,13 +1,16 @@
 <mat-card class="h-100 card" *ngIf="product">
+  
     <img mat-card-image [src]="product.pictureUrl" alt="{{ product.name }}">
     <mat-card-title class="title">{{ product.name }}</mat-card-title>
     <mat-card-subtitle class="subtitle">{{ product.productBrand }}</mat-card-subtitle>
     <mat-card-content class="content">
       <p class="price">{{ product.price | currency: 'EUR' }}</p>
     </mat-card-content>
-    <mat-card-actions class="actions">
-      <button mat-button class="btn" color="primary" (click)="addToCart(product)">Add to Cart</button>
-      <button mat-button class="btn" color="accent" [routerLink]="['/products', product.id]">View Details</button>
+    <mat-card-actions>
+      <div class="hover-container">
+        <button class="view-span" (click)="addToCart(product)">BUY</button>
+        <button class="view-span" [routerLink]="['/products', product.id]">DETAILS</button>
+      </div>
     </mat-card-actions>
   </mat-card>
   

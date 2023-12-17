@@ -64,7 +64,8 @@
   font-size: 18px;
   color: #ffffff;
   border: none;
-  background-color: #797878b4;
+  background-color: rgb(206, 190, 208);
+  border-radius: 4px;
 }
 
 // carousel
@@ -121,4 +122,30 @@ img {
   background: rgba(75, 75, 75, 0.314);
   padding: 100px;
   color: #ffffff;
+}
+
+// indicators
+
+.carousel-indicators {
+  position: absolute;
+  bottom: 10px;
+  left: 35%;
+  transform: translateX(-50%);
+  display: flex;
+  list-style: none;
+}
+
+.carousel-indicators li {
+  
+  width: 30px;
+  height: 2px; 
+  margin: 0 4px;
+  background-color: #b3b3b3;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.carousel-indicators li.active {
+  background-color: #555;
 }

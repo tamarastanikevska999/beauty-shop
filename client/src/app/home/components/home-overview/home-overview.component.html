@@ -18,6 +18,9 @@
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Next</span>
   </a>
+  <ol class="carousel-indicators">
+    <li *ngFor="let image of images; let i = index" [class.active]="i === activeIndex" (click)="setIndex(i)"></li>
+  </ol>
 </div>
 
 <div *ngIf="topRatedProduct" class="widget-container">

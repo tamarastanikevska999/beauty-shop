@@ -12,7 +12,6 @@ export class ProductItemComponent {
   constructor(private basketService: BasketService) {}
 
   addToCart(product: any) {
-    console.log('TEST');
     const item = {
       basketId: this.basketService.getBasket().id,
       productId: product.id,

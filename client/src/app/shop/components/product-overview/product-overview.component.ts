@@ -1,3 +1,4 @@
+import { BasketService } from './../../../basket/service/basket.service';
 import { AccountService } from 'src/app/account/service/account.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { ProductService } from '../../services/product.service';
@@ -20,7 +21,8 @@ export class ProductOverviewComponent implements OnInit{
   constructor(
     private dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
-    protected productService: ProductService
+    protected productService: ProductService,
+    private basketService: BasketService
   ) { }
 
   ngOnInit(): void {
@@ -67,5 +69,20 @@ export class ProductOverviewComponent implements OnInit{
           });
       }
     });
+  }
+
+  addToCart(product: any) {
+    const item = {
+      basketId: this.basketService.getBasket().id,
+      productId: product.id,
+      productName: product.name,
+      price: product.price,
+      quantity: 0,
+      pictureUrl: product.pictureUrl,
+      brand: product.productBrand,
+      type: product.productType
+    }
+    this.basketService.addItemToBasket(item);
+    
   }
 }
