@@ -14,3 +14,9 @@ export interface Basket {
     userEmail: string;
     items: ProductInBasket[];
 }
+
+export interface BasketTotals {
+    shipping: number;
+    subtotal: number;
+    total: number;
+}

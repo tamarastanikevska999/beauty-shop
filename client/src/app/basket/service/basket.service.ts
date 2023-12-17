@@ -1,3 +1,4 @@
+import { BasketTotals } from './../../shared/model/basket';
 import { Product } from 'src/app/shared/model/product';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -9,11 +10,12 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class BasketService {
+  shipping = 150;
   url = environment.apiUrl + 'basket';
   private basketSource = new BehaviorSubject<Basket | null>(null);
   basketSource$ = this.basketSource.asObservable();
-  // private basketTotalSource = new BehaviorSubject<BasketTotals | null>(null);
-  // basketTotalSource$ = this.basketTotalSource.asObservable();
+  private basketTotalSource = new BehaviorSubject<BasketTotals | null>(null);
+  basketTotalSource$ = this.basketTotalSource.asObservable();
 
   constructor(private http: HttpClient) { }
 
@@ -27,6 +29,7 @@ export class BasketService {
       tap((basket) => {
         localStorage.setItem('basket',JSON.stringify(basket));
         this.basketSource.next(basket);
+        this.calculateTotals();
       })
     );
   }
@@ -37,6 +40,7 @@ export class BasketService {
       next: basket => {
         localStorage.setItem('basket',JSON.stringify(basket));
         this.basketSource.next(basket);
+        this.calculateTotals();
       }
     })
   }
@@ -53,12 +57,10 @@ export class BasketService {
     const basket = this.getBasket();
     if (!basket) return;
     const item = basket.items.find(x => x.productId == id);
-    console.log('test item', item);
     if (item) {
       item.quantity -= quantity;
       if (item.quantity === 0) {
         basket.items = basket.items.filter(x => x.productId != id);
-        console.log('test', item.quantity, basket.items);
       }
       this.updateBasket(basket);
     }
@@ -66,14 +68,22 @@ export class BasketService {
 
   private addOrUpdateItem(items: ProductInBasket[], itemToAdd: ProductInBasket, quantity: number): ProductInBasket[] {
     const item = items.find(x => x.productId == itemToAdd.productId);
-    console.log('ADD item',itemToAdd, item);
     if (item) item.quantity += quantity;
     else {
       itemToAdd.quantity = quantity;
       items.push(itemToAdd);
     }
-    console.log('ADD items', items);
     return items;
+  }
+
+  private calculateTotals() {
+    const basket = this.getBasket();
+    if (!basket) return;
+    
+    const subtotal = basket.items.reduce((a, b) => (b.price * b.quantity) + a, 0);
+    const shipping = subtotal > 1000 ? 0 : this.shipping;
+    const total = subtotal + shipping;
+    this.basketTotalSource.next({ shipping, total, subtotal});
   }
 
 }

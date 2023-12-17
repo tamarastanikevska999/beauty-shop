@@ -7,7 +7,7 @@
   <div class="product-details">
     <h2 class="product-name">{{ product.name }}</h2>
     <p class="product-description">{{ product.description }}</p>
-    <p class="product-price">{{ product.price | currency: 'EUR' }}</p>
+    <p class="product-price">{{ product.price | currency: 'MKD' }}</p>
 
     <div class="product-rating">
       <span *ngFor="let _ of [1, 2, 3, 4, 5]" class="star">
