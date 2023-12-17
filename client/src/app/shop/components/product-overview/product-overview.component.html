@@ -1,3 +1,4 @@
+<div>
 <div class="product-detail container" *ngIf="product">
   <div class="product-image">
     <img [src]="product?.pictureUrl" alt="{{ product.name }}">
@@ -18,10 +19,10 @@
   </div>
 </div>
 
-<div class="comment-table container">
+<div *ngIf="product && product.comments.length >0 " class="comment-table container">
   <!-- <mat-divider></mat-divider>   -->
   <ng-container class="row">
-  <table  *ngIf="product && product.comments.length >0 " mat-table [dataSource]="product.comments" class="comments">
+  <table  mat-table [dataSource]="product.comments" class="comments">
 
     <!-- User Column -->
     <ng-container matColumnDef="user">

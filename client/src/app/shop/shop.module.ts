@@ -22,6 +22,7 @@ import { ProductItemComponent } from './components/product-item/product-item.com
 import {MatGridListModule} from '@angular/material/grid-list';
 import { RateProductDialogComponent } from './components/product-overview/rate-product-dialog/rate-product-dialog.component';
 import {MatDividerModule} from '@angular/material/divider';
+import { HomeModule } from '../home/home.module';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import {MatDividerModule} from '@angular/material/divider';
     MatTableModule,
     SharedModule,
     MatGridListModule,
-    MatDividerModule
+    MatDividerModule,
+    HomeModule
   ],
   exports: [
     ShopRoutingModule

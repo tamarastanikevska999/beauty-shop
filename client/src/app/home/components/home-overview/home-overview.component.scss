@@ -1,0 +1,124 @@
+.widget-container {
+  margin-top: 50px;
+  margin-bottom: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  .card-title{
+    color: #555;
+    text-align: center;
+    padding: 20px;
+  }
+}
+
+.card-img{
+  max-height: 200px !important;
+}
+
+// .widget-container:hover .hover-card:hover {
+//   filter: blur(5px);
+//   transition: filter 0.5s ease;
+// }
+
+// .widget-container .hover-card {
+//   filter: none;
+//   transition: filter 0.5s ease;
+// }
+
+.widget-container .card-link {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  position: relative;
+}
+
+.widget-container .link-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-weight: bold;
+}
+
+.hover-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.8);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1000;
+}
+
+.hover-container:hover {
+  opacity: 3;
+}
+
+.view-span {
+  font-size: 18px;
+  color: #ffffff;
+  border: none;
+  background-color: #797878b4;
+}
+
+// carousel
+.carousel {
+  position: relative;
+  height: 650px;
+  overflow: hidden;
+  display: flex;
+  align-items: center; 
+}
+
+.carousel-inner {
+  display: flex;
+}
+
+.carousel-item {
+  width: 100%;
+  transition: transform 0.5s ease-in-out;
+  position: relative;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.carousel-control-prev {
+  left: 0;
+  color: #555;
+}
+
+.carousel-control-next {
+  right: 0;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.carousel-caption {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(
+    -50%,
+    -50%
+  );
+  width: 100%;
+  height: 25%;
+  background: rgba(75, 75, 75, 0.314);
+  padding: 100px;
+  color: #ffffff;
+}
