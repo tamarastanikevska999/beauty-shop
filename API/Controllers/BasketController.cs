@@ -54,5 +54,33 @@ namespace API.Controllers
         {
             await _basketRepository.DeleteCustomersBasketAsync(email);
         }
+
+        [HttpDelete("{email}/empty")]
+        public async Task<ActionResult<CustomerBasket>> EmptyBasket([FromRoute] string email)
+        {
+            try
+            {
+                var updatedBasket = await _basketRepository.EmptyBasket(email);
+                return Ok(updatedBasket);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred: {ex.Message}");
+            }
+        }
+
+        [HttpDelete("{email}/delete/{productId}")]
+        public async Task<ActionResult<CustomerBasket>> DeleteBasketItem([FromRoute]string email, [FromRoute]int productId)
+        {
+            try
+            {
+                var updatedBasket = await _basketRepository.DeleteBasketItem(email, productId);
+                return Ok(updatedBasket);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred: {ex.Message}");
+            }
+        }
     }
 }

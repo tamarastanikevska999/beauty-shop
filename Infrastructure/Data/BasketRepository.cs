@@ -36,6 +36,55 @@ namespace Infrastructure.Data
             return await GetBasketAsync(basket.Id);
         }
 
+        public async Task<CustomerBasket> DeleteBasketItem(string userEmail, int itemId)
+        {
+            var basket = _context.CustomerBaskets
+                .Include(b => b.Items)
+                .FirstOrDefault(b => b.UserEmail == userEmail);
+
+            if (basket != null)
+            {
+                var itemToRemove = basket.Items.FirstOrDefault(i => i.ProductId == itemId);
+
+                if (itemToRemove != null)
+                {
+                    basket.Items.Remove(itemToRemove);
+                    var itemEntity = _context.BasketItem.FirstOrDefault(i => i.ProductId == itemId && i.BasketId == basket.Id);
+                    if (itemEntity != null)
+                    {
+                        _context.BasketItem.Remove(itemEntity);
+                    }
+
+                    _context.SaveChanges();
+
+                    return await GetBasketAsync(basket.Id);
+                }
+            }
+            return null;
+        }
+
+        public async Task<CustomerBasket> EmptyBasket(string userEmail)
+        {
+            var basket = _context.CustomerBaskets
+                .Include(b => b.Items)
+                .FirstOrDefault(b => b.UserEmail == userEmail);
+
+            if (basket != null)
+            {
+                basket.Items.Clear();
+
+                var itemsToRemove = _context.BasketItem
+                    .Where(item => item.BasketId == basket.Id)
+                    .ToList();
+
+                _context.BasketItem.RemoveRange(itemsToRemove);
+
+                _context.SaveChanges();
+                return await GetBasketAsync(basket.Id);
+            }
+            return null;
+        }
+
         public async Task<CustomerBasket> UpdateBasketAsync(CustomerBasket basket)
         {
             _context.CustomerBaskets.Update(basket);

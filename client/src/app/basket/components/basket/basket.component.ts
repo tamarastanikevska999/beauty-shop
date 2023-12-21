@@ -18,8 +18,12 @@ export class BasketComponent {
   }
 
   removeItem(id: number, quantity: number) {
-    console.log('delete',id, quantity);
     this.basketService.removeItemFromBasket(id, quantity);
+  }
+
+  deleteItem(id: number) {
+    console.log(id);
+    this.basketService.deleteBasketItem(id);
   }
 
 }

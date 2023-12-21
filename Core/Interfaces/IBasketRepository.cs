@@ -9,5 +9,7 @@ namespace Core.Interfaces
         Task<CustomerBasket> DeleteCustomersBasketAsync(string email);
         Task<CustomerBasket> GetCustomersBasketAsync(string email);
         Task<CustomerBasket> CreateBasket(CustomerBasket basket);
+        Task<CustomerBasket> DeleteBasketItem(string userEmail, int itemId);
+        Task<CustomerBasket> EmptyBasket(string userEmail);
     }
 }

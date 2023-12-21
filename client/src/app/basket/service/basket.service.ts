@@ -35,7 +35,6 @@ export class BasketService {
   }
 
   public updateBasket(basket: Basket){
-    console.log('In apdate', basket);
     const builder = this.http.put<Basket>(this.url, basket).subscribe({
       next: basket => {
         localStorage.setItem('basket',JSON.stringify(basket));
@@ -43,6 +42,29 @@ export class BasketService {
         this.calculateTotals();
       }
     })
+  }
+  emptyBasket(){
+    const basket = this.getBasket();
+    const url = `${this.url}/${basket.userEmail}/}/empty`;
+    const builder=  this.http.delete<any>(url).subscribe({
+      next: basket => {
+        localStorage.setItem('basket',JSON.stringify(basket));
+        this.basketSource.next(basket);
+        this.calculateTotals();
+      }
+    });
+  }
+
+  deleteBasketItem(productId: number){
+    const basket = this.getBasket();
+    const url = `${this.url}/${basket.userEmail}/delete/${productId}`;
+    const builder=  this.http.delete<any>(url).subscribe({
+      next: basket => {
+        localStorage.setItem('basket',JSON.stringify(basket));
+        this.basketSource.next(basket);
+        this.calculateTotals();
+      }
+    });
   }
 
   addItemToBasket(item: any, quantity = 1) {
